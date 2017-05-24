@@ -1,0 +1,12 @@
+.cache
+.idea
+.tox
+.eggs
+*.egg-info
+.coverage
+
+__pycache__
+*.pyc
+htmlcov
+*.egg
+dist

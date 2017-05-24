@@ -1,0 +1,14 @@
+include LICENSE *.md
+
+# Don't package GitHub-specific files.
+exclude .travis.yml
+
+# Tests
+include tox.ini .coveragerc conftest.py dev-requirements.txt
+recursive-include tests *.py
+
+# Documentation
+include docs/Makefile
+recursive-include docs *.png
+recursive-include docs *.py
+prune docs/_build

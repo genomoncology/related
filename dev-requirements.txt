@@ -1,0 +1,9 @@
+pytest >= 2.9.2
+coverage
+pytest-cov
+pytest-flake8
+pytest-mccabe
+pytest-pep8
+pytest-pythonpath
+pytest-sugar
+tox
