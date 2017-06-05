@@ -13,8 +13,9 @@ class TypedSequence(MutableSequence):
     http://stackoverflow.com/a/3488283
     """
 
-    def __init__(self, cls, args):
+    def __init__(self, cls, args, allow_none=True):
         self.cls = cls
+        self.allowed_types = (cls, type(None)) if allow_none else cls
         self.list = []
         self.extend(args)
 
@@ -48,7 +49,7 @@ class TypedSequence(MutableSequence):
         self.list.insert(i, v)
 
     def _check(self, v):
-        if not isinstance(v, self.cls):
+        if not isinstance(v, self.allowed_types):
             raise TypeError("Invalid value %s (%s != %s)" %
                             (v, type(v), self.cls))
 
@@ -61,8 +62,9 @@ class TypedMapping(MutableMapping):
     http://stackoverflow.com/a/3488283
     """
 
-    def __init__(self, cls, kwargs, key=None):
+    def __init__(self, cls, kwargs, key=None, allow_none=True):
         self.cls = cls
+        self.allowed_types = (cls, type(None)) if allow_none else cls
         self.key = key
         self.dict = OrderedDict()
         self.update(kwargs)
@@ -96,7 +98,7 @@ class TypedMapping(MutableMapping):
         self.dict[i] = v
 
     def _check(self, v):
-        if not isinstance(v, self.cls):
+        if not isinstance(v, self.allowed_types):
             raise TypeError("%s is not an instance of %s" % (v, self.cls))
 
 
@@ -108,8 +110,9 @@ class TypedSet(MutableSet):
     http://stackoverflow.com/a/3488283
     """
 
-    def __init__(self, cls, args):
+    def __init__(self, cls, args, allow_none=True):
         self.cls = cls
+        self.allowed_types = (cls, type(None)) if allow_none else cls
         self.set = set()
         for arg in args or []:
             self.add(arg)
@@ -143,6 +146,6 @@ class TypedSet(MutableSet):
         self.set.discard(value)
 
     def _check(self, v):
-        if not isinstance(v, self.cls):
+        if not isinstance(v, self.allowed_types):
             raise TypeError("Invalid value %s (%s != %s)" %
                             (v, type(v), self.cls))
