@@ -140,7 +140,7 @@ def to_yaml(obj, stream=None, dumper_cls=yaml.Dumper, default_flow_style=False,
 
 
 def from_yaml(stream, cls=None, loader_cls=yaml.Loader,
-              object_pairs_hook=OrderedDict):
+              object_pairs_hook=OrderedDict, **extras):
     """
     Convert a YAML stream into a class via the OrderedLoader class.
     """
@@ -156,7 +156,8 @@ def from_yaml(stream, cls=None, loader_cls=yaml.Loader,
         yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
         construct_mapping)
 
-    yaml_dict = yaml.load(stream, OrderedLoader)
+    yaml_dict = yaml.load(stream, OrderedLoader) or {}
+    yaml_dict.update(extras)
     return cls(**yaml_dict) if cls else yaml_dict
 
 
@@ -172,10 +173,11 @@ def to_json(obj, indent=4, sort_keys=True, **kwargs):
     return json.dumps(obj_dict, indent=indent, sort_keys=sort_keys)
 
 
-def from_json(stream, cls=None, object_pairs_hook=OrderedDict):
+def from_json(stream, cls=None, object_pairs_hook=OrderedDict, **extras):
     """
     Convert a JSON string or stream into specified class.
     """
     stream = stream.read() if hasattr(stream, 'read') else stream
-    json_dict = json.loads(stream, object_pairs_hook=OrderedDict)
+    json_dict = json.loads(stream, object_pairs_hook=object_pairs_hook)
+    json_dict.update(extras)
     return to_model(cls, json_dict) if cls else json_dict

@@ -6,6 +6,7 @@ from .decorators import (
 )
 
 from .types import (
+    ImmutableDict,
     TypedSequence,
     TypedMapping,
     TypedSet,
@@ -44,6 +45,7 @@ __all__ = [
     "immutable",
 
     # types.py
+    "ImmutableDict",
     "TypedSequence",
     "TypedMapping",
     "TypedSet",
@@ -75,7 +77,7 @@ __all__ = [
 
 __author__ = """Ian Maurer"""
 __email__ = 'ian@genomoncology.com'
-__version__ = '0.2'
+__version__ = '0.3'
 
 __uri__ = "http://www.github.com/genomoncology/related"
 __copyright__ = "Copyright (c) 2017 genomoncology.com"

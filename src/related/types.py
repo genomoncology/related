@@ -1,8 +1,18 @@
 # -*- coding: utf-8 -*-
+from attr.exceptions import FrozenInstanceError
 from collections import (MutableSequence, MutableMapping, OrderedDict,
                          MutableSet)
 
 DEFAULT_DATE_FORMAT = "%Y-%m-%d"
+
+
+class ImmutableDict(dict):
+
+    def __setitem__(self, key, value):
+        raise FrozenInstanceError()
+
+    def __delitem__(self, key):
+        raise FrozenInstanceError()
 
 
 class TypedSequence(MutableSequence):
@@ -96,6 +106,9 @@ class TypedMapping(MutableMapping):
     def __setitem__(self, i, v):
         self._check(v)
         self.dict[i] = v
+
+    def add(self, v):
+        self[getattr(v, self.key)] = v
 
     def _check(self, v):
         if not isinstance(v, self.allowed_types):
