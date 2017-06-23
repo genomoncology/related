@@ -1,8 +1,43 @@
 # coding=utf-8
-from related.types import TypedSequence, TypedMapping, TypedSet
+from related.types import TypedSequence, TypedMapping, TypedSet, ImmutableDict
+from attr.exceptions import FrozenInstanceError
 from related.converters import str_if_not_none
 from collections import OrderedDict
 import pytest
+
+
+def test_immutable_dict():
+    immutable = ImmutableDict(dict(a=1))
+
+    with pytest.raises(FrozenInstanceError):
+        del immutable['a']
+
+    assert immutable == dict(a=1)
+
+    with pytest.raises(FrozenInstanceError):
+        immutable['b'] = 2
+
+    assert immutable == dict(a=1)
+
+    with pytest.raises(FrozenInstanceError):
+        immutable.clear()
+
+    assert immutable == dict(a=1)
+
+    with pytest.raises(FrozenInstanceError):
+        immutable.pop('a')
+
+    assert immutable == dict(a=1)
+
+    with pytest.raises(FrozenInstanceError):
+        immutable.something = 0
+
+    assert immutable == dict(a=1)
+
+    with pytest.raises(FrozenInstanceError):
+        del immutable.something_else
+
+    assert immutable == dict(a=1)
 
 
 def test_str_if_not_none():
@@ -45,6 +80,13 @@ def test_mapping():
 
     with pytest.raises(TypeError):
         map["d"] = 4.0
+
+    with pytest.raises(TypeError):
+        map.add(5)
+
+    map.add(4, 'd')
+    dct['d'] = 4
+    assert map == dct
 
 
 def test_set():

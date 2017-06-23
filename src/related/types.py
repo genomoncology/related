@@ -14,6 +14,18 @@ class ImmutableDict(dict):
     def __delitem__(self, key):
         raise FrozenInstanceError()
 
+    def __setattr__(self, name, value):
+        raise FrozenInstanceError()
+
+    def __delattr__(self, name):
+        raise FrozenInstanceError()
+
+    def pop(self, key, **kwargs):
+        raise FrozenInstanceError()
+
+    def clear(self):
+        raise FrozenInstanceError()
+
 
 class TypedSequence(MutableSequence):
     """
@@ -107,8 +119,15 @@ class TypedMapping(MutableMapping):
         self._check(v)
         self.dict[i] = v
 
-    def add(self, v):
-        self[getattr(v, self.key)] = v
+    def add(self, v, key=None):
+        if key is not None:
+            self[key] = v
+
+        elif self.key and hasattr(v, self.key):
+            self[getattr(v, self.key)] = v  # pragma: no cover
+
+        else:
+            raise TypeError("No key set in instance or provided in call.")
 
     def _check(self, v):
         if not isinstance(v, self.allowed_types):
