@@ -3,6 +3,7 @@ from uuid import UUID
 from future.moves.urllib.parse import urlparse
 from six import string_types
 from datetime import datetime
+from inspect import isfunction
 
 
 from .types import TypedSequence, TypedMapping, TypedSet
@@ -142,6 +143,9 @@ def str_to_uuid(value):
     :param value: str or UUID object
     :return: UUID object
     """
+    if isfunction(value):
+        value = value()
+
     return UUID(value) if isinstance(value, string_types) else value
 
 

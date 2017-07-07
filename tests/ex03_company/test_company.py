@@ -74,3 +74,7 @@ def test_invalid_regex():
 def test_invalid_boolean(company):
     with raises(TypeError):
         Company(name="fail", is_active="YES!")
+
+
+def test_uuid_unique():
+    assert Company(name='a').uuid != Company(name='b').uuid

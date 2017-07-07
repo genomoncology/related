@@ -14,6 +14,7 @@ def init_default(required, default, optional_default):
     """
     if not required and default == NOTHING:
         default = optional_default
+
     return default
 
 

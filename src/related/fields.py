@@ -196,7 +196,7 @@ def UUIDField(default=NOTHING, required=False, repr=True, cmp=True):
     :param bool cmp: include this field in generated comparison.
     """
     cls = UUID
-    default = _init_fields.init_default(required, default, uuid4())
+    default = _init_fields.init_default(required, default, uuid4)
     validator = _init_fields.init_validator(required, cls)
     return attrib(default=default, convert=converters.str_to_uuid,
                   validator=validator, repr=repr, cmp=cmp)
