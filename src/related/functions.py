@@ -180,5 +180,5 @@ def from_json(stream, cls=None, object_pairs_hook=OrderedDict, **extras):
     stream = stream.read() if hasattr(stream, 'read') else stream
     json_dict = json.loads(stream, object_pairs_hook=object_pairs_hook)
     if extras:
-        json_dict.update(extras)
+        json_dict.update(extras)  # pragma: no cover
     return to_model(cls, json_dict) if cls else json_dict
