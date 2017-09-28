@@ -14,7 +14,7 @@ with open('dev-requirements.txt') as dev_requirements_file:
 
 setup(
     name="related",
-    version='0.4',
+    version='0.5',
 
     package_dir={
         '': 'src'

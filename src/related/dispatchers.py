@@ -82,5 +82,5 @@ def _(obj, **kwargs):
 
 @to_dict.register(date)  # noqa F811
 def _(obj, **kwargs):
-    formatter = kwargs.get('formatter', DEFAULT_DATE_FORMAT)
+    formatter = kwargs.get('formatter') or DEFAULT_DATE_FORMAT
     return obj.strftime(formatter)
