@@ -9,6 +9,9 @@ from inspect import isfunction
 from .types import TypedSequence, TypedMapping, TypedSet
 from .functions import to_model
 
+CHILD_ERROR_MSG = "Failed to convert value ({}) to child object class ({}). " \
+                  + "... [Original error message: {}]"
+
 
 def to_child_field(cls):
     """
@@ -24,7 +27,11 @@ def to_child_field(cls):
             self.cls = cls
 
         def __call__(self, value):
-            return to_model(self.cls, value)
+            try:
+                return to_model(self.cls, value)
+            except ValueError as e:
+                error_msg = CHILD_ERROR_MSG.format(value, self.cls, str(e))
+                raise ValueError(error_msg)
 
     return ChildConverter(cls)
 
