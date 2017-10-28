@@ -9,7 +9,8 @@ from six import string_types
 from . import _init_fields, types, converters, validators
 
 
-def BooleanField(default=NOTHING, required=True, repr=True, cmp=True):
+def BooleanField(default=NOTHING, required=True, repr=True, cmp=True,
+                 key=None):
     """
     Create new bool field on a model.
 
@@ -17,13 +18,16 @@ def BooleanField(default=NOTHING, required=True, repr=True, cmp=True):
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
     :param bool cmp: include this field in generated comparison.
+    :param string key: override name of the value when converted to dict.
     """
     default = _init_fields.init_default(required, default, None)
     validator = _init_fields.init_validator(required, bool)
-    return attrib(default=default, validator=validator, repr=repr, cmp=cmp)
+    return attrib(default=default, validator=validator, repr=repr, cmp=cmp,
+                  metadata=dict(key=key))
 
 
-def ChildField(cls, default=NOTHING, required=True, repr=True, cmp=True):
+def ChildField(cls, default=NOTHING, required=True, repr=True, cmp=True,
+               key=None):
     """
     Create new child field on a model.
 
@@ -32,16 +36,17 @@ def ChildField(cls, default=NOTHING, required=True, repr=True, cmp=True):
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
     :param bool cmp: include this field in generated comparison.
+    :param string key: override name of the value when converted to dict.
     """
     default = _init_fields.init_default(required, default, None)
     converter = converters.to_child_field(cls)
     validator = _init_fields.init_validator(required, cls)
     return attrib(default=default, convert=converter, validator=validator,
-                  repr=repr, cmp=cmp)
+                  repr=repr, cmp=cmp, metadata=dict(key=key))
 
 
 def DateField(formatter=types.DEFAULT_DATE_FORMAT, default=NOTHING,
-              required=True, repr=True, cmp=True):
+              required=True, repr=True, cmp=True, key=None):
     """
     Create new date field on a model.
 
@@ -49,15 +54,18 @@ def DateField(formatter=types.DEFAULT_DATE_FORMAT, default=NOTHING,
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
     :param bool cmp: include this field in generated comparison.
+    :param string key: override name of the value when converted to dict.
     """
     default = _init_fields.init_default(required, default, None)
     validator = _init_fields.init_validator(required, date)
     converter = converters.to_date_field(formatter)
     return attrib(default=default, convert=converter, validator=validator,
-                  repr=repr, cmp=cmp, metadata=dict(formatter=formatter))
+                  repr=repr, cmp=cmp,
+                  metadata=dict(formatter=formatter, key=key))
 
 
-def FloatField(default=NOTHING, required=True, repr=True, cmp=True):
+def FloatField(default=NOTHING, required=True, repr=True, cmp=True,
+               key=None):
     """
     Create new float field on a model.
 
@@ -65,14 +73,17 @@ def FloatField(default=NOTHING, required=True, repr=True, cmp=True):
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
     :param bool cmp: include this field in generated comparison.
+    :param string key: override name of the value when converted to dict.
     """
     default = _init_fields.init_default(required, default, None)
     validator = _init_fields.init_validator(required, float)
     return attrib(default=default, convert=converters.float_if_not_none,
-                  validator=validator, repr=repr, cmp=cmp)
+                  validator=validator, repr=repr, cmp=cmp,
+                  metadata=dict(key=key))
 
 
-def IntegerField(default=NOTHING, required=True, repr=True, cmp=True):
+def IntegerField(default=NOTHING, required=True, repr=True, cmp=True,
+                 key=None):
     """
     Create new int field on a model.
 
@@ -80,14 +91,17 @@ def IntegerField(default=NOTHING, required=True, repr=True, cmp=True):
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
     :param bool cmp: include this field in generated comparison.
+    :param string key: override name of the value when converted to dict.
     """
     default = _init_fields.init_default(required, default, None)
     validator = _init_fields.init_validator(required, int)
     return attrib(default=default, convert=converters.int_if_not_none,
-                  validator=validator, repr=repr, cmp=cmp)
+                  validator=validator, repr=repr, cmp=cmp,
+                  metadata=dict(key=key))
 
 
-def MappingField(cls, key, default=NOTHING, required=True, repr=False):
+def MappingField(cls, child_key, default=NOTHING, required=True, repr=False,
+                 key=None):
     """
     Create new mapping field on a model.
 
@@ -97,15 +111,17 @@ def MappingField(cls, key, default=NOTHING, required=True, repr=False):
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
     :param bool cmp: include this field in generated comparison.
+    :param string key: override name of the value when converted to dict.
     """
     default = _init_fields.init_default(required, default, OrderedDict())
-    converter = converters.to_mapping_field(cls, key)
+    converter = converters.to_mapping_field(cls, child_key)
     validator = _init_fields.init_validator(required, types.TypedMapping)
     return attrib(default=default, convert=converter, validator=validator,
-                  repr=repr)
+                  repr=repr, metadata=dict(key=key))
 
 
-def RegexField(regex, default=NOTHING, required=True, repr=True, cmp=True):
+def RegexField(regex, default=NOTHING, required=True, repr=True, cmp=True,
+               key=None):
     """
     Create new str field on a model.
 
@@ -113,15 +129,17 @@ def RegexField(regex, default=NOTHING, required=True, repr=True, cmp=True):
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
     :param bool cmp: include this field in generated comparison.
+    :param string key: override name of the value when converted to dict.
     """
     default = _init_fields.init_default(required, default, None)
     validator = _init_fields.init_validator(required, string_types,
                                             validators.regex(regex))
     return attrib(default=default, convert=converters.str_if_not_none,
-                  validator=validator, repr=repr, cmp=cmp)
+                  validator=validator, repr=repr, cmp=cmp,
+                  metadata=dict(key=key))
 
 
-def SequenceField(cls, default=NOTHING, required=True, repr=False):
+def SequenceField(cls, default=NOTHING, required=True, repr=False, key=None):
     """
     Create new sequence field on a model.
 
@@ -130,15 +148,16 @@ def SequenceField(cls, default=NOTHING, required=True, repr=False):
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
     :param bool cmp: include this field in generated comparison.
+    :param string key: override name of the value when converted to dict.
     """
     default = _init_fields.init_default(required, default, [])
     converter = converters.to_sequence_field(cls)
     validator = _init_fields.init_validator(required, types.TypedSequence)
     return attrib(default=default, convert=converter, validator=validator,
-                  repr=repr)
+                  repr=repr, metadata=dict(key=key))
 
 
-def SetField(cls, default=NOTHING, required=True, repr=False):
+def SetField(cls, default=NOTHING, required=True, repr=False, key=None):
     """
     Create new set field on a model.
 
@@ -147,15 +166,17 @@ def SetField(cls, default=NOTHING, required=True, repr=False):
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
     :param bool cmp: include this field in generated comparison.
+    :param string key: override name of the value when converted to dict.
     """
     default = _init_fields.init_default(required, default, set())
     converter = converters.to_set_field(cls)
     validator = _init_fields.init_validator(required, types.TypedSet)
     return attrib(default=default, convert=converter, validator=validator,
-                  repr=repr)
+                  repr=repr, metadata=dict(key=key))
 
 
-def StringField(default=NOTHING, required=True, repr=True, cmp=True):
+def StringField(default=NOTHING, required=True, repr=True, cmp=True,
+                key=None):
     """
     Create new str field on a model.
 
@@ -163,14 +184,16 @@ def StringField(default=NOTHING, required=True, repr=True, cmp=True):
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
     :param bool cmp: include this field in generated comparison.
+    :param string key: override name of the value when converted to dict.
     """
     default = _init_fields.init_default(required, default, None)
     validator = _init_fields.init_validator(required, string_types)
     return attrib(default=default, convert=converters.str_if_not_none,
-                  validator=validator, repr=repr, cmp=cmp)
+                  validator=validator, repr=repr, cmp=cmp,
+                  metadata=dict(key=key))
 
 
-def URLField(default=NOTHING, required=False, repr=True, cmp=True):
+def URLField(default=NOTHING, required=False, repr=True, cmp=True, key=None):
     """
     Create new UUID field on a model.
 
@@ -178,15 +201,17 @@ def URLField(default=NOTHING, required=False, repr=True, cmp=True):
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
     :param bool cmp: include this field in generated comparison.
+    :param string key: override name of the value when converted to dict.
     """
     cls = ParseResult
     default = _init_fields.init_default(required, default, None)
     validator = _init_fields.init_validator(required, cls)
     return attrib(default=default, convert=converters.str_to_url,
-                  validator=validator, repr=repr, cmp=cmp)
+                  validator=validator, repr=repr, cmp=cmp,
+                  metadata=dict(key=key))
 
 
-def UUIDField(default=NOTHING, required=False, repr=True, cmp=True):
+def UUIDField(default=NOTHING, required=False, repr=True, cmp=True, key=None):
     """
     Create new UUID field on a model.
 
@@ -194,9 +219,11 @@ def UUIDField(default=NOTHING, required=False, repr=True, cmp=True):
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
     :param bool cmp: include this field in generated comparison.
+    :param string key: override name of the value when converted to dict.
     """
     cls = UUID
     default = _init_fields.init_default(required, default, uuid4)
     validator = _init_fields.init_validator(required, cls)
     return attrib(default=default, convert=converters.str_to_uuid,
-                  validator=validator, repr=repr, cmp=cmp)
+                  validator=validator, repr=repr, cmp=cmp,
+                  metadata=dict(key=key))

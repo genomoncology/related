@@ -93,8 +93,10 @@ def to_mapping_field(cls, key):
         def __call__(self, values):
             kwargs = OrderedDict()
             for key_value, item in values.items():
-                item[self.key] = key_value
-                kwargs[key_value] = to_model(self.cls, item)
+                if isinstance(item, dict):
+                    item[self.key] = key_value
+                    item = to_model(self.cls, item)
+                kwargs[key_value] = item
             return TypedMapping(cls=self.cls, kwargs=kwargs, key=self.key)
 
     return MappingConverter(cls, key)
