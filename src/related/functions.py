@@ -24,6 +24,19 @@ def to_dict(obj, **kwargs):
     :return: converted dictionary.
     """
 
+    # if is_related, then iterate attrs.
+    if is_model(obj.__class__):
+        return related_obj_to_dict(obj, **kwargs)
+
+    # else, return obj directly. register a custom to_dict if you need to!
+    #   reference: https://pypi.python.org/pypi/singledispatch
+    else:
+        return obj
+
+
+def related_obj_to_dict(obj, **kwargs):
+    """ Covert a known related object to a dictionary. """
+
     # Explicitly discard formatter kwarg, should not be cascaded down.
     kwargs.pop('formatter', None)
 
@@ -33,40 +46,39 @@ def to_dict(obj, **kwargs):
     # if True, don't store fields with None values into dictionary.
     suppress_empty_values = kwargs.get("suppress_empty_values", False)
 
-    # if is_related, then iterate attrs.
-    if is_model(obj.__class__):
-        attrs = fields(obj.__class__)
+    # get list of attrs fields
+    attrs = fields(obj.__class__)
 
-        # instantiate return dict, use OrderedDict type by default
-        return_dict = kwargs.get("dict_factory", OrderedDict)()
+    # instantiate return dict, use OrderedDict type by default
+    return_dict = kwargs.get("dict_factory", OrderedDict)()
 
-        for a in attrs:
+    for a in attrs:
 
-            # skip if private attr and flag tells you to skip
-            if suppress_private_attr and a.name.startswith("_"):
-                continue
+        # skip if private attr and flag tells you to skip
+        if suppress_private_attr and a.name.startswith("_"):
+            continue
 
-            # formatter is a related-specific `attrs` meta field
-            #   see fields.DateField
-            formatter = a.metadata.get('formatter') if a.metadata else None
+        metadata = a.metadata or {}
 
-            # get value and call to_dict on it, passing the kwargs/formatter
-            value = getattr(obj, a.name)
-            value = to_dict(value, formatter=formatter, **kwargs)
+        # formatter is a related-specific `attrs` meta field
+        #   see fields.DateField
+        formatter = metadata.get('formatter')
 
-            # check flag, skip None values
-            if suppress_empty_values and value is None:
-                continue
+        # get value and call to_dict on it, passing the kwargs/formatter
+        value = getattr(obj, a.name)
+        value = to_dict(value, formatter=formatter, **kwargs)
 
-            # store converted / formatted value into return dictionary
-            return_dict[a.name] = value
+        # check flag, skip None values
+        if suppress_empty_values and value is None:
+            continue
 
-        return return_dict
+        # field name can be overridden by the metadata field
+        key_name = a.metadata.get('key') or a.name
 
-    # else, return obj directly. register a custom to_dict if you need to!
-    #   reference: https://pypi.python.org/pypi/singledispatch
-    else:
-        return obj
+        # store converted / formatted value into return dictionary
+        return_dict[key_name] = value
+
+    return return_dict
 
 
 def to_model(cls, value):
@@ -85,12 +97,26 @@ def to_model(cls, value):
         value = (hasattr(cls, value) and getattr(cls, value)) or cls(value)
 
     elif is_model(cls) and isinstance(value, dict):
+        value = convert_key_to_attr_names(cls, value)
         value = cls(**value)
 
     else:
         value = cls(value)
 
     return value
+
+
+def convert_key_to_attr_names(cls, original):
+    """ convert key names to their corresponding attribute names """
+    attrs = fields(cls)
+    updated = {}
+
+    for a in attrs:
+        key_name = a.metadata.get('key') or a.name
+        if key_name in original:
+            updated[a.name] = original.get(key_name)
+
+    return updated
 
 
 def is_model(cls):
