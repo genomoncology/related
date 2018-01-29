@@ -16,6 +16,13 @@ class DataType(enum.Enum):
     OBJECT = 'object'
 
 
+@enum.unique
+class IntEnum(enum.Enum):
+    a = 1
+    b = 2
+    c = 3
+
+
 @related.immutable
 class MyChild(object):
     my_int = related.IntegerField(key="int")
@@ -32,6 +39,7 @@ class MyModel(object):
     is_list = related.SequenceField(str, key="list")
     is_type = related.ChildField(DataType, key="type")
     is_dict = related.MappingField(MyChild, "int", key="dict", required=False)
+    is_enum = related.ChildField(IntEnum, key="enum", required=False)
 
 
 def test_renamed():
@@ -43,6 +51,7 @@ def test_renamed():
         is_list=["a", "b", "c"],
         is_dict={5: MyChild(my_int=5, my_uuid=EXAMPLE_UUID, my_float=3.14)},
         is_type=DataType.OBJECT,
+        is_enum=IntEnum.a,
     )
 
     d = related.to_dict(obj)
@@ -58,4 +67,5 @@ def test_renamed():
         "not": True,
         'list': ['a', 'b', 'c'],
         "type": "object",
+        "enum": 1
     }

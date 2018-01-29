@@ -93,8 +93,7 @@ def to_model(cls, value):
         pass  # skip if right type or value is None
 
     elif issubclass(cls, Enum):
-        # either use the name or the value based lookup for finding enum
-        value = (hasattr(cls, value) and getattr(cls, value)) or cls(value)
+        value = cls(value)
 
     elif is_model(cls) and isinstance(value, dict):
         value = convert_key_to_attr_names(cls, value)

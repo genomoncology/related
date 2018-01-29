@@ -14,7 +14,7 @@ with open('dev-requirements.txt') as dev_requirements_file:
 
 setup(
     name="related",
-    version='0.5.2',
+    version='0.6.0',
 
     package_dir={
         '': 'src'
@@ -27,7 +27,7 @@ setup(
     include_package_data=True,
 
     install_requires=[
-        "attrs==17.1.0",
+        "attrs",
         "PyYAML",
         "future",
         "singledispatch",
