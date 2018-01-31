@@ -118,7 +118,7 @@ def convert_key_to_attr_names(cls, original):
             keys_pulled.add(key_name)
 
     if getattr(cls, '__related_strict__', False):
-        extra = original.keys() - keys_pulled
+        extra = set(original.keys()) - keys_pulled
         if len(extra):
             raise ValueError("Extra keys (strict mode): {}".format(extra))
 
