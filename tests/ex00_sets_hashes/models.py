@@ -2,7 +2,7 @@ import related
 
 
 # removing the frozen gives you (TypeError: unhashable type: 'Person')
-@related.immutable
+@related.immutable(strict=True)
 class Person(object):
     first_name = related.StringField()
     last_name = related.StringField()

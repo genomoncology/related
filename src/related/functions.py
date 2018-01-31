@@ -109,11 +109,18 @@ def convert_key_to_attr_names(cls, original):
     """ convert key names to their corresponding attribute names """
     attrs = fields(cls)
     updated = {}
+    keys_pulled = set()
 
     for a in attrs:
         key_name = a.metadata.get('key') or a.name
         if key_name in original:
             updated[a.name] = original.get(key_name)
+            keys_pulled.add(key_name)
+
+    if getattr(cls, '__related_strict__', False):
+        extra = original.keys() - keys_pulled
+        if len(extra):
+            raise ValueError("Extra keys (strict mode): {}".format(extra))
 
     return updated
 

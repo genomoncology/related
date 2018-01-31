@@ -31,3 +31,16 @@ scientists:
 - first_name: Grace
   last_name: Hopper
 """.strip()
+
+
+def test_strict_mode():
+    p = related.to_model(Person, dict(first_name="Grace", last_name="Hopper"))
+    assert p.first_name == "Grace"
+
+    try:
+        d = dict(first_name="Grace", last_name="Hopper", extra="Failure!")
+        related.to_model(Person, d)
+        assert False, "Did not fail."
+
+    except ValueError as e:
+        assert e, "Error as expected."
