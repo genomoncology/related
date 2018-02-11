@@ -157,6 +157,7 @@ Below are links and descriptions of the tests provided so far.
 | [Example 02]   | Compose v3 with long-form ports and singledispatch to_dict     |
 | [Example 03]   | A single class (Company) with a bunch of value fields.         | 
 | [Example 04]   | A multi-class object model with Enum class value field.        |
+| [Example 05]   | Example that demonstrates basic JSON (de)serialization.        |
 
 
 # Documentation
@@ -226,6 +227,8 @@ documentation is generated.
 | BooleanField          | `bool` value field.                                              | 
 | ChildField            | Child object of a specified type `cls`.                          |
 | DateField             | `date` field formatted using `formatter`.                        |
+| DateTimeField         | `datetime` field formatted using `formatter`.                    |
+| TimeField             | `time` field formatted using `formatter`.                    |
 | FloatField            | `float` value field.                                             |
 | IntegerField          | `int` value field.                                               | 
 | MappingField(cls,key) | Dictionary of objects of type `cls` index by `key` field values. |
@@ -306,3 +309,4 @@ Copyright (c) 2017 [Ian Maurer], [Genomoncology LLC]
 [Example 02]: ./tests/ex02_compose_v3.2
 [Example 03]: ./tests/ex03_company
 [Example 04]: ./tests/ex04_contact
+[Example 05]: ./tests/ex06_json

@@ -2,12 +2,15 @@ from future.moves.urllib.parse import ParseResult
 from collections import OrderedDict
 from enum import Enum
 from uuid import UUID
-from datetime import date
+from datetime import date, datetime, time
 
 from attr._compat import iteritems
 
 from .functions import to_dict
-from .types import TypedSequence, TypedMapping, TypedSet, DEFAULT_DATE_FORMAT
+from .types import (
+    TypedSequence, TypedMapping, TypedSet, DEFAULT_DATE_FORMAT,
+    DEFAULT_DATETIME_FORMAT, DEFAULT_TIME_FORMAT
+)
 
 
 @to_dict.register(list)  # noqa F811
@@ -83,4 +86,17 @@ def _(obj, **kwargs):
 @to_dict.register(date)  # noqa F811
 def _(obj, **kwargs):
     formatter = kwargs.get('formatter') or DEFAULT_DATE_FORMAT
+    return obj.strftime(formatter)
+
+
+@to_dict.register(datetime)  # noqa F811
+def _(obj, **kwargs):
+    formatter = kwargs.get('formatter') or DEFAULT_DATETIME_FORMAT
+    return (obj.isoformat() if formatter == "ISO_FORMAT"
+            else obj.strftime(formatter))
+
+
+@to_dict.register(time)  # noqa F811
+def _(obj, **kwargs):
+    formatter = kwargs.get('formatter') or DEFAULT_TIME_FORMAT
     return obj.strftime(formatter)

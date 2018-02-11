@@ -1,0 +1,26 @@
+{
+    "created_on": "12/21/2017 14:21:55",
+    "data_from": "2017-12-18T00:00:00",
+    "data_to": "2017-12-19T23:59:59",
+    "days": [
+        {
+            "closed_on": "19:00:00",
+            "customers": 487,
+            "date": "2017-12-18",
+            "day_type": "Normal",
+            "logged_on": "19:20",
+            "open_at": "08:00:00",
+            "sales": 27223.65
+        },
+        {
+            "closed_on": "17:30:00",
+            "customers": 192,
+            "date": "2017-12-19",
+            "day_type": "Holiday",
+            "logged_on": "17:50",
+            "open_at": "10:30:00"
+        }
+    ],
+    "id": 982,
+    "name": "Acme store"
+}
