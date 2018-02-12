@@ -28,7 +28,6 @@ Example use cases for `related` object models include:
 # Requirements
 
 * Python (2.7, 3.5, 3.6)
-* attrs (17.1.0)
 
 
 # Installation
