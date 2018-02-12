@@ -4,6 +4,7 @@ from future.moves.urllib.parse import urlparse
 from six import string_types
 from datetime import datetime
 from inspect import isfunction
+from dateutil import parser
 
 
 from .types import TypedSequence, TypedMapping, TypedSet
@@ -180,3 +181,45 @@ def to_date_field(formatter):
             return value
 
     return DateConverter(formatter)
+
+
+def to_datetime_field(formatter):
+    """
+    Returns a callable instance that will convert a string to a DateTime.
+
+    :param formatter: String that represents data format for parsing.
+    :return: instance of the DateTimeConverter.
+    """
+    class DateTimeConverter(object):
+
+        def __init__(self, formatter):
+            self.formatter = formatter
+
+        def __call__(self, value):
+            if isinstance(value, string_types):
+                value = parser.parse(value)
+
+            return value
+
+    return DateTimeConverter(formatter)
+
+
+def to_time_field(formatter):
+    """
+    Returns a callable instance that will convert a string to a Time.
+
+    :param formatter: String that represents data format for parsing.
+    :return: instance of the TimeConverter.
+    """
+    class TimeConverter(object):
+
+        def __init__(self, formatter):
+            self.formatter = formatter
+
+        def __call__(self, value):
+            if isinstance(value, string_types):
+                value = datetime.strptime(value, self.formatter).time()
+
+            return value
+
+    return TimeConverter(formatter)

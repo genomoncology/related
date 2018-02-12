@@ -31,6 +31,7 @@ setup(
         "PyYAML",
         "future",
         "singledispatch",
+        "python-dateutil"
     ],
 
     setup_requires=[

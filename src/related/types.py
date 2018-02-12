@@ -4,6 +4,8 @@ from collections import (MutableSequence, MutableMapping, OrderedDict,
                          MutableSet)
 
 DEFAULT_DATE_FORMAT = "%Y-%m-%d"
+DEFAULT_DATETIME_FORMAT = "ISO_FORMAT"
+DEFAULT_TIME_FORMAT = "%H:%M:%S"
 
 
 class ImmutableDict(dict):
