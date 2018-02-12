@@ -7,7 +7,7 @@
 
 `Related` is a Python library for creating nested object models
 that can be serialized to and de-serialized from
-nested python dictionaries. 
+nested python dictionaries.
 When paired with other libraries (e.g. [PyYAML]),
 `Related` object models can be used to convert to and from
 nested data formats (e.g. JSON, YAML).
@@ -47,7 +47,7 @@ import related
 class Person(object):
     first_name = related.StringField()
     last_name = related.StringField()
-    
+
 @related.immutable
 class RoleModels(object):
     scientists = related.SetField(Person)
@@ -55,7 +55,7 @@ class RoleModels(object):
 people = [Person(first_name="Grace", last_name="Hopper"),
           Person(first_name="Katherine", last_name="Johnson"),
           Person(first_name="Katherine", last_name="Johnson")]
-          
+
 print(related.to_yaml(RoleModels(scientists=people)))
 ```
 
@@ -150,14 +150,15 @@ def test_compose_from_yml():
 More examples can be found by reviewing the [tests/] folder of this project.
 Below are links and descriptions of the tests provided so far.
 
-| Example        | description                                                    | 
+| Example        | description                                                    |
 | -------------- | -------------------------------------------------------------- |
 | [Example 00]   | First example above that shows how SetFields work.             |
 | [Example 01]   | Second example above that demonstrates YAML (de)serialization. |
 | [Example 02]   | Compose v3 with long-form ports and singledispatch to_dict     |
-| [Example 03]   | A single class (Company) with a bunch of value fields.         | 
+| [Example 03]   | A single class (Company) with a bunch of value fields.         |
 | [Example 04]   | A multi-class object model with Enum class value field.        |
-| [Example 05]   | Example that demonstrates basic JSON (de)serialization.        |
+| [Example 05]   | Handling of renaming of attributes including Python keywords.  |
+| [Example 06]   | Basic JSON (de)serialization with TimeField and DateTimeField. |
 
 
 # Documentation
@@ -200,7 +201,7 @@ that provides the following:
 * ``to_model`` function that instantiated classes
   used by the de-serialization process going from
   python dictionaries to the related model.
-* Conversion helper functions 
+* Conversion helper functions
   (``to_yaml``, ``from_yaml``, ``to_json``, ``from_json``)
   for easily going between
   related models and data formats.
@@ -211,7 +212,7 @@ that provides the following:
 
 ## Class Decorators
 
-| decorator             | description                                                      | 
+| decorator             | description                                                      |
 | --------------        | ---------------------------------------------------------------- |
 | @mutable              | Activate a related class that instantiates changeable objects.   |
 | @immutable            | Activate a related class that instantiates unchangeable objects. |
@@ -222,20 +223,20 @@ documentation is generated.
 
 ## Field Types
 
-| field type            | description                                                      | 
+| field type            | description                                                      |
 | --------------        | ---------------------------------------------------------------- |
-| BooleanField          | `bool` value field.                                              | 
+| BooleanField          | `bool` value field.                                              |
 | ChildField            | Child object of a specified type `cls`.                          |
 | DateField             | `date` field formatted using `formatter`.                        |
 | DateTimeField         | `datetime` field formatted using `formatter`.                    |
 | TimeField             | `time` field formatted using `formatter`.                    |
 | FloatField            | `float` value field.                                             |
-| IntegerField          | `int` value field.                                               | 
+| IntegerField          | `int` value field.                                               |
 | MappingField(cls,key) | Dictionary of objects of type `cls` index by `key` field values. |
-| RegexField(regex)     | `str` value field that is validated by re.match(`regex`).        | 
+| RegexField(regex)     | `str` value field that is validated by re.match(`regex`).        |
 | SequenceField(cls)    | List of objects all of specified type `cls`.                     |
 | SetField              | Set of objects all of a specified type `cls`.                    |
-| StringField           | `str` value field.                                               | 
+| StringField           | `str` value field.                                               |
 | URLField              | [ParseResult] object.                                            |
 | UUIDField             | [UUID] object, will create [uuid4] by default if not specified.  |
 
@@ -247,16 +248,16 @@ See the [fields.py] file to see how the above are constructed.
 
 ## Functions
 
-| function            | description                                           | 
+| function            | description                                           |
 | ------------------- | ----------------------------------------------------- |
-| from_json(s,cls)    | Convert a JSON string or stream into specified class. | 
-| from_yaml(s,cls)    | Convert a YAML string or stream into specified class. | 
+| from_json(s,cls)    | Convert a JSON string or stream into specified class. |
+| from_yaml(s,cls)    | Convert a YAML string or stream into specified class. |
 | is_related(obj)     | Returns True if object is @mutable or @immutable.     |
-| to_dict(obj)        | Singledispatch function for converting to a dict.     | 
-| to_json(obj)        | Convert object to a (pretty) JSON string via to_dict. | 
+| to_dict(obj)        | Singledispatch function for converting to a dict.     |
+| to_json(obj)        | Convert object to a (pretty) JSON string via to_dict. |
 | to_model(cls,value) | Convert a value to a `cls` instance.                  |
-| to_yaml(obj)        | Convert object to a YAML string via to_dict.          | 
- 
+| to_yaml(obj)        | Convert object to a YAML string via to_dict.          |
+
 
 See the [functions.py] file to view the source code until proper
 documentation is generated.
@@ -288,7 +289,7 @@ Copyright (c) 2017 [Ian Maurer], [Genomoncology LLC]
 [functions.py]: ./src/related/functions.py
 [attrs]: http://attrs.readthedocs.io/en/stable/
 [this article by Glyph]: https://glyph.twistedmatrix.com/2016/08/attrs.html
-[Genomoncology LLC]: http://genomoncology.com 
+[Genomoncology LLC]: http://genomoncology.com
 [Ian Maurer]: https://github.com/imaurer
 [singledispatch library]: https://pypi.python.org/pypi/singledispatch
 [monkey-patching]: http://stackoverflow.com/questions/5626193/what-is-a-monkey-patch
@@ -309,4 +310,5 @@ Copyright (c) 2017 [Ian Maurer], [Genomoncology LLC]
 [Example 02]: ./tests/ex02_compose_v3.2
 [Example 03]: ./tests/ex03_company
 [Example 04]: ./tests/ex04_contact
-[Example 05]: ./tests/ex06_json
+[Example 05]: ./tests/ex05_field_names
+[Example 06]: ./tests/ex06_json

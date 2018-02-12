@@ -1,3 +1,13 @@
+0.6.2 (2018-02-12)
+----------------
+- Contribution [GabrielDav]: TimeField and DateTimeField fields.
+
+
+0.6.1 (2018-01-31)
+----------------
+- Strict Mode [Issue #8] throws an exception when receiving an undefined key.
+
+
 0.3 (2017-06-23)
 ----------------
 - New type: ImmutableDict

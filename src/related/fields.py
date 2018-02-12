@@ -66,16 +66,15 @@ def DateField(formatter=types.DEFAULT_DATE_FORMAT, default=NOTHING,
 
 def DateTimeField(formatter=types.DEFAULT_DATETIME_FORMAT, default=NOTHING,
                   required=True, repr=True, cmp=True, key=None):
-    ("""
+    """
     Create new datetime field on a model.
 
-    :param default: any datetime or string that can be converted"""
-        """ to a datetime value
+    :param default: any datetime or string that can be converted to a datetime
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
     :param bool cmp: include this field in generated comparison.
     :param string key: override name of the value when converted to dict.
-    """)
+    """
     default = _init_fields.init_default(required, default, None)
     validator = _init_fields.init_validator(required, datetime)
     converter = converters.to_datetime_field(formatter)
