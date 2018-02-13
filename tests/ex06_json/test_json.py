@@ -36,6 +36,6 @@ def test_store_data_from_json():
     generated_json = to_json(store_data,
                              suppress_empty_values=True,
                              suppress_map_key_values=True).replace(" ", "")
-    print(original_json)
-    print(generated_json)
+    # print(original_json)
+    # print(generated_json)
     assert original_json.replace(" ", "") == generated_json

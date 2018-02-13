@@ -77,7 +77,7 @@ def to_set_field(cls):
     return SetConverter(cls)
 
 
-def to_mapping_field(cls, key):
+def to_mapping_field(cls, key):  # pragma: no mccabe
     """
     Returns a callable instance that will convert a value to a Mapping.
 
@@ -93,11 +93,17 @@ def to_mapping_field(cls, key):
 
         def __call__(self, values):
             kwargs = OrderedDict()
-            for key_value, item in values.items():
-                if isinstance(item, dict):
-                    item[self.key] = key_value
-                    item = to_model(self.cls, item)
-                kwargs[key_value] = item
+
+            if not isinstance(values, (type({}), type(None))):
+                raise TypeError("Invalid type : {}".format(type(values)))
+
+            if values:
+                for key_value, item in values.items():
+                    if isinstance(item, dict):
+                        item[self.key] = key_value
+                        item = to_model(self.cls, item)
+                    kwargs[key_value] = item
+
             return TypedMapping(cls=self.cls, kwargs=kwargs, key=self.key)
 
     return MappingConverter(cls, key)
