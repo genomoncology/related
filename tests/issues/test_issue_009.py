@@ -11,6 +11,7 @@ class Child(object):
 @related.immutable
 class Root(object):
     children = related.MappingField(Child, 'name', required=False)
+    another = related.MappingField(Child, 'name', default={})
 
 
 def test_empty_mapping():
@@ -29,5 +30,5 @@ def test_invalid_mapping():
 
 
 INPUT_YAML = "children:"
-OUTPUT_YAML = "children: null"
+OUTPUT_YAML = "children: {}\nanother: {}"
 INVALID_YAML = "children: 5"
