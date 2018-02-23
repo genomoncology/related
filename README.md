@@ -149,15 +149,16 @@ def test_compose_from_yml():
 More examples can be found by reviewing the [tests/] folder of this project.
 Below are links and descriptions of the tests provided so far.
 
-| Example        | description                                                    |
-| -------------- | -------------------------------------------------------------- |
-| [Example 00]   | First example above that shows how SetFields work.             |
-| [Example 01]   | Second example above that demonstrates YAML (de)serialization. |
-| [Example 02]   | Compose v3 with long-form ports and singledispatch to_dict     |
-| [Example 03]   | A single class (Company) with a bunch of value fields.         |
-| [Example 04]   | A multi-class object model with Enum class value field.        |
-| [Example 05]   | Handling of renaming of attributes including Python keywords.  |
-| [Example 06]   | Basic JSON (de)serialization with TimeField and DateTimeField. |
+| Example        | description                                                        |
+| -------------- | ------------------------------------------------------------------ |
+| [Example 00]   | First example above that shows how SetFields work.                 |
+| [Example 01]   | Second example above that demonstrates YAML (de)serialization.     |
+| [Example 02]   | Compose v3 with long-form ports and singledispatch to_dict         |
+| [Example 03]   | A single class (Company) with a bunch of value fields.             |
+| [Example 04]   | A multi-class object model with Enum class value field.            |
+| [Example 05]   | Handling of renaming of attributes including Python keywords.      |
+| [Example 06]   | Basic JSON (de)serialization with TimeField and DateTimeField.     |
+| [Example 07]   | Function decorator that converts inputs to obj and outputs to dict |
 
 
 # Documentation
@@ -311,3 +312,4 @@ Copyright (c) 2017 [Ian Maurer], [Genomoncology LLC]
 [Example 04]: ./tests/ex04_contact
 [Example 05]: ./tests/ex05_field_names
 [Example 06]: ./tests/ex06_json
+[Example 07]: ./tests/ex07_serializer

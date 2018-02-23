@@ -94,6 +94,9 @@ def to_mapping_field(cls, key):  # pragma: no mccabe
         def __call__(self, values):
             kwargs = OrderedDict()
 
+            if isinstance(values, TypedMapping):
+                return values
+
             if not isinstance(values, (type({}), type(None))):
                 raise TypeError("Invalid type : {}".format(type(values)))
 
