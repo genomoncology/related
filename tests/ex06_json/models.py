@@ -27,3 +27,4 @@ class StoreData(object):
     data_from = related.DateTimeField()
     data_to = related.DateTimeField()
     days = related.SequenceField(DayData)
+    price = related.DecimalField()

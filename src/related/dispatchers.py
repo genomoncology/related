@@ -1,3 +1,4 @@
+from decimal import Decimal
 from future.moves.urllib.parse import ParseResult
 from collections import OrderedDict
 from enum import Enum
@@ -100,3 +101,8 @@ def _(obj, **kwargs):
 def _(obj, **kwargs):
     formatter = kwargs.get('formatter') or DEFAULT_TIME_FORMAT
     return obj.strftime(formatter)
+
+
+@to_dict.register(Decimal)  # noqa F811
+def _(obj, **kwargs):
+    return str(obj)

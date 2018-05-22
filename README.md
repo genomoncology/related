@@ -157,7 +157,7 @@ Below are links and descriptions of the tests provided so far.
 | [Example 03]   | A single class (Company) with a bunch of value fields.             |
 | [Example 04]   | A multi-class object model with Enum class value field.            |
 | [Example 05]   | Handling of renaming of attributes including Python keywords.      |
-| [Example 06]   | Basic JSON (de)serialization with TimeField and DateTimeField.     |
+| [Example 06]   | Basic JSON (de)serialization with TimeField, DateTimeField and DecimalField.     |
 | [Example 07]   | Function decorator that converts inputs to obj and outputs to dict |
 
 

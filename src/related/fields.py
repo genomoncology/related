@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from decimal import Decimal
 from future.moves.urllib.parse import ParseResult
 from attr import attrib, NOTHING
 from collections import OrderedDict
@@ -263,5 +264,23 @@ def UUIDField(default=NOTHING, required=False, repr=True, cmp=True, key=None):
     default = _init_fields.init_default(required, default, uuid4)
     validator = _init_fields.init_validator(required, cls)
     return attrib(default=default, convert=converters.str_to_uuid,
+                  validator=validator, repr=repr, cmp=cmp,
+                  metadata=dict(key=key))
+
+
+def DecimalField(default=NOTHING, required=True, repr=True, cmp=True,
+                 key=None):
+    """
+    Create new decimal field on a model.
+
+    :param default: any decimal value
+    :param bool required: whether or not the object is invalid if not provided.
+    :param bool repr: include this field should appear in object's repr.
+    :param bool cmp: include this field in generated comparison.
+    :param string key: override name of the value when converted to dict.
+    """
+    default = _init_fields.init_default(required, default, None)
+    validator = _init_fields.init_validator(required, Decimal)
+    return attrib(default=default, convert=lambda x: Decimal(x),
                   validator=validator, repr=repr, cmp=cmp,
                   metadata=dict(key=key))
