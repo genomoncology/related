@@ -28,6 +28,7 @@ from .fields import (
     StringField,
     URLField,
     UUIDField,
+    DecimalField,
 )
 
 from .functions import (
@@ -69,6 +70,7 @@ __all__ = [
     "SequenceField",
     "URLField",
     "UUIDField",
+    "DecimalField",
 
     # functions.py
     "from_json",

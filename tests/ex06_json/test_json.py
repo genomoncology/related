@@ -1,6 +1,8 @@
 from os.path import join, dirname
 from datetime import datetime, time
 
+from decimal import Decimal
+
 from .models import StoreData, DayType
 from related import to_json, from_json, to_model
 
@@ -14,6 +16,7 @@ def test_store_data_from_json():
 
     assert store_data.name == "Acme store"
     assert store_data.id == 982
+    assert store_data.price == Decimal('98237.448')
     assert store_data.data_from == datetime(2017, 12, 18, 0, 0)
     assert store_data.data_to == datetime(2017, 12, 19, 23, 59, 59)
     assert len(store_data.days) == 2
