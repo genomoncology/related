@@ -7,7 +7,11 @@ import yaml
 import json
 
 from attr._make import fields
-from singledispatch import singledispatch
+
+try:
+    from functools import singledispatch
+except ImportError:
+    from singledispatch import singledispatch
 
 
 @singledispatch
