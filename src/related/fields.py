@@ -41,7 +41,9 @@ def ChildField(cls, default=NOTHING, required=True, repr=True, cmp=True,
     """
     default = _init_fields.init_default(required, default, None)
     converter = converters.to_child_field(cls)
-    validator = _init_fields.init_validator(required, cls)
+    validator = _init_fields.init_validator(
+        required, object if isinstance(cls, str) else cls
+    )
     return attrib(default=default, convert=converter, validator=validator,
                   repr=repr, cmp=cmp, metadata=dict(key=key))
 
