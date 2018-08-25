@@ -314,3 +314,4 @@ Copyright (c) 2017 [Ian Maurer], [Genomoncology LLC]
 [Example 05]: ./tests/ex05_field_names
 [Example 06]: ./tests/ex06_json
 [Example 07]: ./tests/ex07_serializer
+[Example 08]: ./tests/ex08_self_reference
