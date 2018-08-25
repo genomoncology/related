@@ -1,5 +1,4 @@
 [dev-packages]
-
 pipenv = "*"
 pytest = ">= 2.9.2"
 coverage = "*"
@@ -10,10 +9,11 @@ pytest-mccabe = "*"
 pytest-pythonpath = "*"
 pytest-sugar = "*"
 tox = "*"
-
+black = "==18.6b4"
+white = "*"
+twine = ">=1.5.0"
 
 [packages]
-
 attrs = "*"
 pyyaml = "*"
 future = "*"
