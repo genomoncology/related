@@ -198,6 +198,24 @@ def SequenceField(cls, default=NOTHING, required=True, repr=False, key=None):
                   repr=repr, metadata=dict(key=key))
 
 
+def NullableSequenceField(cls, default=NOTHING, required=True, repr=False, key=None):
+    """
+    Create new nullable sequence field on a model.
+
+    :param cls: class (or name) of the model to be related in Sequence.
+    :param default: any TypedSequence or list
+    :param bool required: whether or not the object is invalid if not provided.
+    :param bool repr: include this field should appear in object's repr.
+    :param bool cmp: include this field in generated comparison.
+    :param string key: override name of the value when converted to dict.
+    """
+    default = _init_fields.init_default(required, default, [])
+    converter = converters.to_nullable_sequence_field(cls)
+    validator = _init_fields.init_validator(required, types.TypedSequence)
+    return attrib(default=default, convert=converter, validator=validator,
+                  repr=repr, metadata=dict(key=key))
+
+
 def SetField(cls, default=NOTHING, required=True, repr=False, key=None):
     """
     Create new set field on a model.

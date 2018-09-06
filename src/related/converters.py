@@ -65,6 +65,30 @@ def to_sequence_field(cls):
     return SequenceConverter(cls)
 
 
+def to_nullable_sequence_field(cls):
+    """
+    Returns a callable instance that will convert a value to a NullableSequence.
+
+    :param cls: Valid class type of the items in the NullableSequence.
+    :return: instance of the NullableSequenceConverter.
+    """
+    class NullableSequenceConverter(object):
+
+        def __init__(self, cls):
+            self._cls = cls
+
+        @property
+        def cls(self):
+            return resolve_class(self._cls)
+
+        def __call__(self, values):
+            values = values or []
+            args = [None if value is None else to_model(self.cls, value) for value in values]
+            return TypedSequence(cls=self.cls, args=args)
+
+    return NullableSequenceConverter(cls)
+
+
 def to_set_field(cls):
     """
     Returns a callable instance that will convert a value to a Sequence.
