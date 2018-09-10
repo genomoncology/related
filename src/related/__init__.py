@@ -1,17 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from .decorators import (
-    mutable,
-    immutable,
-    serializer,
-)
+from .decorators import mutable, immutable, serializer
 
-from .types import (
-    ImmutableDict,
-    TypedSequence,
-    TypedMapping,
-    TypedSet,
-)
+from .types import ImmutableDict, TypedSequence, TypedMapping, TypedSet
 
 from .fields import (
     BooleanField,
@@ -24,6 +15,7 @@ from .fields import (
     MappingField,
     RegexField,
     SequenceField,
+    NullableSequenceField,
     SetField,
     StringField,
     URLField,
@@ -48,13 +40,11 @@ __all__ = [
     "mutable",
     "immutable",
     "serializer",
-
     # types.py
     "ImmutableDict",
     "TypedSequence",
     "TypedMapping",
     "TypedSet",
-
     # fields.py
     "BooleanField",
     "ChildField",
@@ -68,10 +58,10 @@ __all__ = [
     "SetField",
     "StringField",
     "SequenceField",
+    "NullableSequenceField",
     "URLField",
     "UUIDField",
     "DecimalField",
-
     # functions.py
     "from_json",
     "from_yaml",
@@ -84,8 +74,8 @@ __all__ = [
 
 
 __author__ = """Ian Maurer"""
-__email__ = 'ian@genomoncology.com'
-__version__ = '0.7.0'
+__email__ = "ian@genomoncology.com"
+__version__ = "0.7.0"
 
 __uri__ = "http://www.github.com/genomoncology/related"
 __copyright__ = "Copyright (c) 2017 genomoncology.com"
