@@ -5,6 +5,7 @@ from enum import Enum
 
 import yaml
 import json
+import itertools
 
 from attr._make import fields
 
@@ -41,6 +42,11 @@ def to_dict(obj, **kwargs):
 def related_obj_to_dict(obj, **kwargs):
     """ Covert a known related object to a dictionary. """
 
+    cls = obj.__class__
+
+    # Get list of @property attributes
+    property_attrs = getattr(cls, '__property_attrs__', [])
+
     # Explicitly discard formatter kwarg, should not be cascaded down.
     kwargs.pop('formatter', None)
 
@@ -51,12 +57,12 @@ def related_obj_to_dict(obj, **kwargs):
     suppress_empty_values = kwargs.get("suppress_empty_values", False)
 
     # get list of attrs fields
-    attrs = fields(obj.__class__)
+    attrs = fields(cls)
 
     # instantiate return dict, use OrderedDict type by default
     return_dict = kwargs.get("dict_factory", OrderedDict)()
 
-    for a in attrs:
+    for a in itertools.chain(attrs, property_attrs):
 
         # skip if private attr and flag tells you to skip
         if suppress_private_attr and a.name.startswith("_"):
