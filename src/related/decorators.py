@@ -7,12 +7,15 @@ from .functions import to_model, to_dict, is_model
 
 
 def _property_attrs(cls):
-    for prop_name, prop_value in vars(cls).items():
-        if not isinstance(prop_value, property):
+    PropertyAttr = namedtuple('PropertyAttr',
+                              ['metadata', 'name'])
+
+    for prop in dir(cls):
+        if (prop.startswith('__') or
+                not isinstance(getattr(cls, prop, None), property)):
             continue
-        PropertyAttr = namedtuple('PropertyAttr',
-                                  ['metadata', 'name'])
-        yield PropertyAttr(metadata={}, name=prop_name)
+
+        yield PropertyAttr(metadata={}, name=prop)
 
 
 def mutable(maybe_cls=None, strict=False):
