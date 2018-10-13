@@ -37,8 +37,8 @@ clean-test:
 #----------
 
 publish:
-	pip install 'twine>=1.5.0'
-	python setup.py sdist
-	python setup.py bdist_wheel --universal
-	twine upload dist/*
+	pipenv install --dev 'twine>=1.5.0'
+	pipenv run python setup.py sdist
+	pipenv run python setup.py bdist_wheel --universal
+	pipenv run twine upload -r pypi dist/*
 	rm -fr build dist .egg related.egg-info

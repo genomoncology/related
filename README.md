@@ -159,6 +159,7 @@ Below are links and descriptions of the tests provided so far.
 | [Example 05]   | Handling of renaming of attributes including Python keywords.      |
 | [Example 06]   | Basic JSON (de)serialization with TimeField, DateTimeField and DecimalField.     |
 | [Example 07]   | Function decorator that converts inputs to obj and outputs to dict |
+| [Example 08]   | Handle self-referencing and out-of-order references using strings. |
 
 
 # Documentation
@@ -313,3 +314,4 @@ Copyright (c) 2017 [Ian Maurer], [Genomoncology LLC]
 [Example 05]: ./tests/ex05_field_names
 [Example 06]: ./tests/ex06_json
 [Example 07]: ./tests/ex07_serializer
+[Example 08]: ./tests/ex08_self_reference

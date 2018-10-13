@@ -5,7 +5,7 @@ from six import string_types
 from datetime import datetime
 from inspect import isfunction
 from dateutil import parser
-
+from importlib import import_module
 
 from .types import TypedSequence, TypedMapping, TypedSet
 from .functions import to_model
@@ -25,7 +25,11 @@ def to_child_field(cls):
     class ChildConverter(object):
 
         def __init__(self, cls):
-            self.cls = cls
+            self._cls = cls
+
+        @property
+        def cls(self):
+            return resolve_class(self._cls)
 
         def __call__(self, value):
             try:
@@ -47,7 +51,11 @@ def to_sequence_field(cls):
     class SequenceConverter(object):
 
         def __init__(self, cls):
-            self.cls = cls
+            self._cls = cls
+
+        @property
+        def cls(self):
+            return resolve_class(self._cls)
 
         def __call__(self, values):
             values = values or []
@@ -67,7 +75,11 @@ def to_set_field(cls):
     class SetConverter(object):
 
         def __init__(self, cls):
-            self.cls = cls
+            self._cls = cls
+
+        @property
+        def cls(self):
+            return resolve_class(self._cls)
 
         def __call__(self, values):
             values = values or set()
@@ -88,8 +100,12 @@ def to_mapping_field(cls, key):  # pragma: no mccabe
     class MappingConverter(object):
 
         def __init__(self, cls, key):
-            self.cls = cls
+            self._cls = cls
             self.key = key
+
+        @property
+        def cls(self):
+            return resolve_class(self._cls)
 
         def __call__(self, values):
             kwargs = OrderedDict()
@@ -232,3 +248,11 @@ def to_time_field(formatter):
             return value
 
     return TimeConverter(formatter)
+
+
+def resolve_class(cls):
+    if isinstance(cls, str):
+        module_name, model_name = cls.rsplit(".", 1)
+        module = import_module(module_name)
+        cls = getattr(module, model_name)
+    return cls
