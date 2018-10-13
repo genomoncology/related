@@ -1,9 +1,10 @@
-sudo: false
+sudo: true
 cache:
   directories:
     - $HOME/.cache/pip
 
 language: python
+dist: xenial
 
 
 matrix:
@@ -16,6 +17,8 @@ matrix:
       env: TOXENV=py36
     - python: "3.6"
       env: TOXENV=flake8
+    - python: "3.7"
+      env: TOXENV=py37
 
 
 install:

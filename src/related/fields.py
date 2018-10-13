@@ -232,7 +232,7 @@ def StringField(default=NOTHING, required=True, repr=True, cmp=True,
                   metadata=dict(key=key))
 
 
-def URLField(default=NOTHING, required=False, repr=True, cmp=True, key=None):
+def URLField(default=NOTHING, required=True, repr=True, cmp=True, key=None):
     """
     Create new UUID field on a model.
 
