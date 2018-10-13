@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 from attr.exceptions import FrozenInstanceError
-from collections import (MutableSequence, MutableMapping, OrderedDict,
-                         MutableSet)
+from collections import OrderedDict
+
+try:
+    from collections.abc import (MutableSequence, MutableMapping, MutableSet)
+except ImportError:
+    from collections import (MutableSequence, MutableMapping, MutableSet)
+
 
 DEFAULT_DATE_FORMAT = "%Y-%m-%d"
 DEFAULT_DATETIME_FORMAT = "ISO_FORMAT"
