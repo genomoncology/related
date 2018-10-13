@@ -51,6 +51,7 @@ def DateField(formatter=types.DEFAULT_DATE_FORMAT, default=NOTHING,
     """
     Create new date field on a model.
 
+    :param formatter: date formatter string (default: "%Y-%m-%d")
     :param default: any date or string that can be converted to a date value
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
@@ -70,6 +71,7 @@ def DateTimeField(formatter=types.DEFAULT_DATETIME_FORMAT, default=NOTHING,
     """
     Create new datetime field on a model.
 
+    :param formatter: datetime formatter string (default: "ISO_FORMAT")
     :param default: any datetime or string that can be converted to a datetime
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
@@ -89,6 +91,7 @@ def TimeField(formatter=types.DEFAULT_TIME_FORMAT, default=NOTHING,
     """
     Create new time field on a model.
 
+    :param formatter: time formatter string (default: "%H:%M:%S")
     :param default: any time or string that can be converted to a time value
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
@@ -145,8 +148,8 @@ def MappingField(cls, child_key, default=NOTHING, required=True, repr=False,
     Create new mapping field on a model.
 
     :param cls: class (or name) of the model to be related in Sequence.
-    :param key: key field on the child object to be used as the mapping key.
-    :param default: any mappingtype
+    :param child_key: key field on the child object to be used as the map key.
+    :param default: any mapping type
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
     :param bool cmp: include this field in generated comparison.
@@ -164,6 +167,7 @@ def RegexField(regex, default=NOTHING, required=True, repr=True, cmp=True,
     """
     Create new str field on a model.
 
+    :param regex: regex validation string (e.g. "[^@]+@[^@]+" for email)
     :param default: any string value
     :param bool required: whether or not the object is invalid if not provided.
     :param bool repr: include this field should appear in object's repr.
