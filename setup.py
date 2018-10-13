@@ -30,8 +30,8 @@ setup(
         "attrs",
         "PyYAML",
         "future",
-        "singledispatch",
-        "python-dateutil"
+        "singledispatch;python_version<'3.4'",
+        "python-dateutil",
     ],
 
     setup_requires=[

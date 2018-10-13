@@ -17,5 +17,5 @@ twine = ">=1.5.0"
 attrs = "*"
 pyyaml = "*"
 future = "*"
-singledispatch = "*"
+singledispatch = {version = "*", markers = "python_version<'3.4'"}
 python-dateutil = "*"
