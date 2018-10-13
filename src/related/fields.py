@@ -42,7 +42,7 @@ def ChildField(cls, default=NOTHING, required=True, repr=True, cmp=True,
     default = _init_fields.init_default(required, default, None)
     converter = converters.to_child_field(cls)
     validator = _init_fields.init_validator(required, cls)
-    return attrib(default=default, convert=converter, validator=validator,
+    return attrib(default=default, converter=converter, validator=validator,
                   repr=repr, cmp=cmp, metadata=dict(key=key))
 
 
@@ -61,7 +61,7 @@ def DateField(formatter=types.DEFAULT_DATE_FORMAT, default=NOTHING,
     default = _init_fields.init_default(required, default, None)
     validator = _init_fields.init_validator(required, date)
     converter = converters.to_date_field(formatter)
-    return attrib(default=default, convert=converter, validator=validator,
+    return attrib(default=default, converter=converter, validator=validator,
                   repr=repr, cmp=cmp,
                   metadata=dict(formatter=formatter, key=key))
 
@@ -81,7 +81,7 @@ def DateTimeField(formatter=types.DEFAULT_DATETIME_FORMAT, default=NOTHING,
     default = _init_fields.init_default(required, default, None)
     validator = _init_fields.init_validator(required, datetime)
     converter = converters.to_datetime_field(formatter)
-    return attrib(default=default, convert=converter, validator=validator,
+    return attrib(default=default, converter=converter, validator=validator,
                   repr=repr, cmp=cmp,
                   metadata=dict(formatter=formatter, key=key))
 
@@ -101,7 +101,7 @@ def TimeField(formatter=types.DEFAULT_TIME_FORMAT, default=NOTHING,
     default = _init_fields.init_default(required, default, None)
     validator = _init_fields.init_validator(required, time)
     converter = converters.to_time_field(formatter)
-    return attrib(default=default, convert=converter, validator=validator,
+    return attrib(default=default, converter=converter, validator=validator,
                   repr=repr, cmp=cmp,
                   metadata=dict(formatter=formatter, key=key))
 
@@ -119,7 +119,7 @@ def FloatField(default=NOTHING, required=True, repr=True, cmp=True,
     """
     default = _init_fields.init_default(required, default, None)
     validator = _init_fields.init_validator(required, float)
-    return attrib(default=default, convert=converters.float_if_not_none,
+    return attrib(default=default, converter=converters.float_if_not_none,
                   validator=validator, repr=repr, cmp=cmp,
                   metadata=dict(key=key))
 
@@ -137,7 +137,7 @@ def IntegerField(default=NOTHING, required=True, repr=True, cmp=True,
     """
     default = _init_fields.init_default(required, default, None)
     validator = _init_fields.init_validator(required, int)
-    return attrib(default=default, convert=converters.int_if_not_none,
+    return attrib(default=default, converter=converters.int_if_not_none,
                   validator=validator, repr=repr, cmp=cmp,
                   metadata=dict(key=key))
 
@@ -158,7 +158,7 @@ def MappingField(cls, child_key, default=NOTHING, required=True, repr=False,
     default = _init_fields.init_default(required, default, OrderedDict())
     converter = converters.to_mapping_field(cls, child_key)
     validator = _init_fields.init_validator(required, types.TypedMapping)
-    return attrib(default=default, convert=converter, validator=validator,
+    return attrib(default=default, converter=converter, validator=validator,
                   repr=repr, metadata=dict(key=key))
 
 
@@ -177,7 +177,7 @@ def RegexField(regex, default=NOTHING, required=True, repr=True, cmp=True,
     default = _init_fields.init_default(required, default, None)
     validator = _init_fields.init_validator(required, string_types,
                                             validators.regex(regex))
-    return attrib(default=default, convert=converters.str_if_not_none,
+    return attrib(default=default, converter=converters.str_if_not_none,
                   validator=validator, repr=repr, cmp=cmp,
                   metadata=dict(key=key))
 
@@ -196,7 +196,7 @@ def SequenceField(cls, default=NOTHING, required=True, repr=False, key=None):
     default = _init_fields.init_default(required, default, [])
     converter = converters.to_sequence_field(cls)
     validator = _init_fields.init_validator(required, types.TypedSequence)
-    return attrib(default=default, convert=converter, validator=validator,
+    return attrib(default=default, converter=converter, validator=validator,
                   repr=repr, metadata=dict(key=key))
 
 
@@ -214,7 +214,7 @@ def SetField(cls, default=NOTHING, required=True, repr=False, key=None):
     default = _init_fields.init_default(required, default, set())
     converter = converters.to_set_field(cls)
     validator = _init_fields.init_validator(required, types.TypedSet)
-    return attrib(default=default, convert=converter, validator=validator,
+    return attrib(default=default, converter=converter, validator=validator,
                   repr=repr, metadata=dict(key=key))
 
 
@@ -231,7 +231,7 @@ def StringField(default=NOTHING, required=True, repr=True, cmp=True,
     """
     default = _init_fields.init_default(required, default, None)
     validator = _init_fields.init_validator(required, string_types)
-    return attrib(default=default, convert=converters.str_if_not_none,
+    return attrib(default=default, converter=converters.str_if_not_none,
                   validator=validator, repr=repr, cmp=cmp,
                   metadata=dict(key=key))
 
@@ -249,7 +249,7 @@ def URLField(default=NOTHING, required=True, repr=True, cmp=True, key=None):
     cls = ParseResult
     default = _init_fields.init_default(required, default, None)
     validator = _init_fields.init_validator(required, cls)
-    return attrib(default=default, convert=converters.str_to_url,
+    return attrib(default=default, converter=converters.str_to_url,
                   validator=validator, repr=repr, cmp=cmp,
                   metadata=dict(key=key))
 
@@ -267,7 +267,7 @@ def UUIDField(default=NOTHING, required=False, repr=True, cmp=True, key=None):
     cls = UUID
     default = _init_fields.init_default(required, default, uuid4)
     validator = _init_fields.init_validator(required, cls)
-    return attrib(default=default, convert=converters.str_to_uuid,
+    return attrib(default=default, converter=converters.str_to_uuid,
                   validator=validator, repr=repr, cmp=cmp,
                   metadata=dict(key=key))
 
@@ -285,6 +285,6 @@ def DecimalField(default=NOTHING, required=True, repr=True, cmp=True,
     """
     default = _init_fields.init_default(required, default, None)
     validator = _init_fields.init_validator(required, Decimal)
-    return attrib(default=default, convert=lambda x: Decimal(x),
+    return attrib(default=default, converter=lambda x: Decimal(x),
                   validator=validator, repr=repr, cmp=cmp,
                   metadata=dict(key=key))
