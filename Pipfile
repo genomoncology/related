@@ -11,7 +11,6 @@ pytest-sugar = "*"
 tox = "*"
 black = "==18.6b4"
 white = "*"
-twine = ">=1.5.0"
 
 [packages]
 attrs = "*"
