@@ -218,3 +218,41 @@ def from_json(stream, cls=None, object_pairs_hook=OrderedDict, **extras):
     if extras:
         json_dict.update(extras)  # pragma: no cover
     return to_model(cls, json_dict) if cls else json_dict
+
+
+try:
+    import toml
+except ImportError:
+    toml = None
+
+if toml:
+    def to_toml(obj, stream=None, **kwargs):
+        """
+        Serialize a Python object into a TOML stream.
+
+        If stream is None, return the produced string instead.
+
+        OrderedDict reference: http://stackoverflow.com/a/21912744
+        default_flow_style reference: http://stackoverflow.com/a/18210750
+
+        :param data: python object to be serialized
+        :param stream (optional): to be serialized to
+        :param kwargs: arguments to pass to to_dict
+        :return: stream if provided, string if stream is None
+        """
+        obj_dict = to_dict(obj, **kwargs)
+        if stream is None:
+            return toml.dumps(obj_dict)
+        else:
+            toml.dump(obj_dict, stream)
+            return stream
+
+    def from_toml(stream, cls=None, **extras):
+        """
+        Convert a TOML string or stream into specified class or OrderedDict.
+        """
+        stream = stream.read() if hasattr(stream, 'read') else stream
+        toml_dict = toml.loads(stream, OrderedDict)
+        if extras:
+            toml_dict.update(extras)
+        return to_model(cls, toml_dict) if cls else toml_dict

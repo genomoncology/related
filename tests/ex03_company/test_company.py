@@ -5,8 +5,8 @@ from future.moves.urllib.parse import ParseResult
 from pytest import fixture, raises
 from six import string_types
 
-from related import (to_dict, to_yaml, from_yaml,
-                     to_json, from_json)
+from related import (from_json, from_toml, from_yaml,
+                     to_dict, to_json, to_toml, to_yaml)
 
 from .models import Company
 
@@ -56,8 +56,19 @@ def test_yaml(company):
     assert ("url: %s" % company.url.geturl()) in company_yaml
 
 
+def test_toml(company):
+    company_toml = to_toml(to_dict(company))
+    assert ('uuid = "%s"' % company.uuid) in company_toml
+    assert ('url = "%s"' % company.url.geturl()) in company_toml
+
+
 def test_roundtrip_yaml(company):
     new_company = from_yaml(to_yaml(company), Company)
+    assert new_company == company
+
+
+def test_roundtrip_toml(company):
+    new_company = from_toml(to_toml(company), Company)
     assert new_company == company
 
 

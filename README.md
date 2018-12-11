@@ -8,9 +8,9 @@
 `Related` is a Python library for creating nested object models
 that can be serialized to and de-serialized from
 nested python dictionaries.
-When paired with other libraries (e.g. [PyYAML]),
+When paired with other libraries (e.g. [PyYAML], [toml]),
 `Related` object models can be used to convert to and from
-nested data formats (e.g. JSON, YAML).
+nested data formats (e.g. JSON, TOML, YAML).
 
 Example use cases for `related` object models include:
 
@@ -35,6 +35,10 @@ Example use cases for `related` object models include:
 Install using `pip`...
 
     pip install related
+
+Or with optional TOML dependencies:
+
+    pip install related[toml]
 
 
 # First Example
@@ -160,6 +164,7 @@ Below are links and descriptions of the tests provided so far.
 | [Example 06]   | Basic JSON (de)serialization with TimeField, DateTimeField and DecimalField.     |
 | [Example 07]   | Function decorator that converts inputs to obj and outputs to dict |
 | [Example 08]   | Handle self-referencing and out-of-order references using strings. |
+| [Example 09]   | Basic TOML (de)serialization with TimeField, DateTimeField and DecimalField.     |
 
 
 # Documentation
@@ -252,11 +257,13 @@ See the [fields.py] file to see how the above are constructed.
 | function            | description                                           |
 | ------------------- | ----------------------------------------------------- |
 | from_json(s,cls)    | Convert a JSON string or stream into specified class. |
+| from_json(s,cls)    | Convert a TOML string or stream into specified class. |
 | from_yaml(s,cls)    | Convert a YAML string or stream into specified class. |
 | is_related(obj)     | Returns True if object is @mutable or @immutable.     |
 | to_dict(obj)        | Singledispatch function for converting to a dict.     |
 | to_json(obj)        | Convert object to a (pretty) JSON string via to_dict. |
 | to_model(cls,value) | Convert a value to a `cls` instance.                  |
+| to_toml(obj)        | Convert object to a TOML string via to_dict.          |
 | to_yaml(obj)        | Convert object to a YAML string via to_dict.          |
 
 
@@ -304,6 +311,7 @@ Copyright (c) 2017 [Ian Maurer], [Genomoncology LLC]
 [Jackson]: https://github.com/FasterXML/jackson
 [Docker Compose example]: https://docs.docker.com/compose/gettingstarted/#step-3-define-services-in-a-compose-file
 [PyYAML]: https://pypi.python.org/pypi/PyYAML
+[toml]: https://github.com/uiri/toml
 
 [tests/]: ./tests/
 [Example 00]: ./tests/ex00_sets_hashes
@@ -315,3 +323,4 @@ Copyright (c) 2017 [Ian Maurer], [Genomoncology LLC]
 [Example 06]: ./tests/ex06_json
 [Example 07]: ./tests/ex07_serializer
 [Example 08]: ./tests/ex08_self_reference
+[Example 09]: ./tests/ex09_toml

@@ -33,11 +33,13 @@ from .fields import (
 
 from .functions import (
     from_json,
+    from_toml,
     from_yaml,
     is_model,
     to_dict,
     to_json,
     to_model,
+    to_toml,
     to_yaml,
 )
 
@@ -74,11 +76,13 @@ __all__ = [
 
     # functions.py
     "from_json",
+    "from_toml",
     "from_yaml",
     "is_model",
     "to_dict",
     "to_json",
     "to_model",
+    "to_toml",
     "to_yaml",
 ]
 
