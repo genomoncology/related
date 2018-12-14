@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from uuid import UUID
 from future.moves.urllib.parse import urlparse
-from six import string_types
+from six import string_types, callable
 from datetime import datetime
 from inspect import isfunction
 from dateutil import parser
@@ -33,6 +33,10 @@ def to_child_field(cls):
 
         def __call__(self, value):
             try:
+                # Issue #33: if value is the class and callable, then invoke
+                if value == self._cls and callable(value):
+                    value = value()
+
                 return to_model(self.cls, value)
             except ValueError as e:
                 error_msg = CHILD_ERROR_MSG.format(value, self.cls, str(e))

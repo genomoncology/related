@@ -1,6 +1,6 @@
 [dev-packages]
 pipenv = "*"
-pytest = ">= 2.9.2"
+pytest = "== 3.10.1"
 coverage = "*"
 pytest-cov = "*"
 "pytest-flake8" = "*"

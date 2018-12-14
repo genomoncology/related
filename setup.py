@@ -14,7 +14,7 @@ with open('dev-requirements.txt') as dev_requirements_file:
 
 setup(
     name="related",
-    version='0.7.1',
+    version='0.7.2',
     url="https://github.com/genomoncology/related",
 
     package_dir={
