@@ -28,7 +28,7 @@ setup(
     include_package_data=True,
 
     install_requires=[
-        "attrs",
+        "attrs>=19.3.0",
         "PyYAML",
         "future",
         "singledispatch;python_version<'3.4'",
