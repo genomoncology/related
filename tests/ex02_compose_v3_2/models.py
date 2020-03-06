@@ -17,7 +17,7 @@ class Mode(Enum):
 @related.immutable
 class Port(object):
     """ https://docs.docker.com/compose/compose-file/#ports """
-    _short_form = related.StringField(required=False, repr=False, cmp=False)
+    _short_form = related.StringField(required=False, repr=False, eq=False)
     target = related.IntegerField(required=False)
     published = related.IntegerField(required=False)
     protocol = related.ChildField(Protocol, default=Protocol.TCP)
