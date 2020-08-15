@@ -24,7 +24,7 @@ def to_dict(obj, **kwargs):
 
     :param obj: object instance
     :param kwargs: keyword arguments such as suppress_private_attr,
-                   suppress_empty_values, dict_factory
+                   suppress_empty_values, dict_factory, ignore_keys
     :return: converted dictionary.
     """
 
@@ -77,7 +77,8 @@ def related_obj_to_dict(obj, **kwargs):
             continue
 
         # field name can be overridden by the metadata field
-        key_name = a.metadata.get('key') or a.name
+        if kwargs.get('ignore_keys', False): key_name = a.name
+        else: key_name = a.metadata.get('key') or a.name
 
         # store converted / formatted value into return dictionary
         return_dict[key_name] = value
@@ -85,11 +86,12 @@ def related_obj_to_dict(obj, **kwargs):
     return return_dict
 
 
-def to_model(cls, value):
+def to_model(cls, value, **kwargs):
     """
     Coerce a value into a model object based on a class-type (cls).
     :param cls: class type to coerce into
     :param value: value to be coerced
+    :param kwargs: accepts ignore_keys param to avoid using metadata key field
     :return: original value or coerced value (value')
     """
 
@@ -100,7 +102,7 @@ def to_model(cls, value):
         value = cls(value)
 
     elif is_model(cls) and isinstance(value, dict):
-        value = convert_key_to_attr_names(cls, value)
+        value = convert_key_to_attr_names(cls, value, **kwargs)
         value = cls(**value)
 
     else:
@@ -109,14 +111,16 @@ def to_model(cls, value):
     return value
 
 
-def convert_key_to_attr_names(cls, original):
+def convert_key_to_attr_names(cls, original, **kwargs):
     """ convert key names to their corresponding attribute names """
     attrs = fields(cls)
     updated = {}
     keys_pulled = set()
 
     for a in attrs:
-        key_name = a.metadata.get('key') or a.name
+        # field name can be overridden by the metadata field
+        if kwargs.get('ignore_keys', False): key_name = a.name
+        else: key_name = a.metadata.get('key') or a.name
         if key_name in original:
             updated[a.name] = original.get(key_name)
             keys_pulled.add(key_name)
