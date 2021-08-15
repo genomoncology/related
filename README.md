@@ -244,6 +244,10 @@ Adding your own field types is fairly straightforward
 due to the power of the underlying `attrs` project.
 See the [fields.py] file to see how the above are constructed.
 
+All fields support the `kw_only` keyword, which is part of [attrs](https://www.attrs.org/en/stable/changelog.html#id102).
+Setting `kw_only=True` makes it possible to have a generated `__init__` with keyword-only arguments,
+relaxing the required ordering of default and non-default valued attributes.
+
 
 ## Functions
 
