@@ -1,9 +1,7 @@
-<img src='./.images/logo.png' width='140' align="left" />
-<a href='https://codecov.io/github/genomoncology/related/'><img src='https://codecov.io/github/genomoncology/related/branch/master/graph/badge.svg' align="right" /></a>
-<a href='https://travis-ci.org/genomoncology/related'><img src='https://img.shields.io/travis/genomoncology/related.svg' align="right" /></a>
-<a href='https://pypi.python.org/pypi/related'><img src='https://img.shields.io/pypi/v/related.svg' align="right" /></a>
+# Related
 
-<br/><br/>
+| :exclamation:  This is a fork of [related](https://github.com/genomoncology/related), which is apparently abandoned :exclamation:|
+|---------------------------------------------------------------------------------------------------------------------|
 
 `Related` is a Python library for creating nested object models
 that can be serialized to and de-serialized from
@@ -34,7 +32,7 @@ Example use cases for `related` object models include:
 
 Install using `pip`...
 
-    pip install related
+    TBD
 
 
 # First Example
