@@ -1,4 +1,19 @@
 #----------
+# install
+#----------
+
+install-related:
+	python -m pip install -U wheel pip
+	pip install . -U
+
+install-dev:
+	pip install -r ./dev-requirements.txt -U
+
+.PHONY: install
+install: install-related install-dev
+	@echo 'installed development requirements'
+
+#----------
 # test
 #----------
 

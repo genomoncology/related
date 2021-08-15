@@ -15,7 +15,7 @@ with open('dev-requirements.txt') as dev_requirements_file:
 setup(
     name="related",
     version='0.7.2',
-    url="https://github.com/genomoncology/related",
+    url="https://github.com/M0r13n/related",
 
     package_dir={
         '': 'src'
@@ -48,15 +48,10 @@ setup(
     long_description="%s\n\n%s" % (readme, history),
 
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
