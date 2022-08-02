@@ -3,7 +3,7 @@
 
 from setuptools import setup
 
-with open('README.md') as readme_file:
+with open('README.md', encoding='utf-8') as readme_file:
     readme = readme_file.read()
 
 with open('CHANGELOG.md') as history_file:
@@ -14,7 +14,7 @@ with open('dev-requirements.txt') as dev_requirements_file:
 
 setup(
     name="related",
-    version='0.7.2',
+    version='0.7.3',
     url="https://github.com/genomoncology/related",
 
     package_dir={
@@ -46,6 +46,7 @@ setup(
     keywords='related object models yaml json dict nested',
     description="Related: Straightforward nested object models in Python",
     long_description="%s\n\n%s" % (readme, history),
+    long_description_content_type="text/markdown",
 
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',

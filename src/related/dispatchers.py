@@ -5,8 +5,6 @@ from enum import Enum
 from uuid import UUID
 from datetime import date, datetime, time
 
-from attr._compat import iteritems
-
 from .functions import to_dict
 from .types import (
     TypedSequence, TypedMapping, TypedSet, DEFAULT_DATE_FORMAT,
@@ -32,7 +30,7 @@ def _(obj, **kwargs):
     dict_factory = kwargs.get("dict_factory", OrderedDict)
 
     items = []
-    for kk, vv in iteritems(obj):
+    for kk, vv in obj.items():
         vv = to_dict(vv, **kwargs)
         if (not suppress_empty_values) or (vv is not None):
             items.append((to_dict(kk, **kwargs), vv))

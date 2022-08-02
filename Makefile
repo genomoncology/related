@@ -39,5 +39,5 @@ clean-test:
 publish:
 	pipenv run python setup.py sdist
 	pipenv run python setup.py bdist_wheel --universal
-	twine upload -r pypi dist/*
+	twine upload -r pypi dist/* --verbose
 	rm -fr build dist .egg related.egg-info

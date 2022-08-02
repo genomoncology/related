@@ -1,6 +1,6 @@
 [dev-packages]
 pipenv = "*"
-pytest = "== 3.10.1"
+pytest = "== 7.1.2"
 coverage = "*"
 pytest-cov = "*"
 "pytest-flake8" = "*"
@@ -13,7 +13,7 @@ black = "==18.6b4"
 white = "*"
 
 [packages]
-attrs = "*"
+attrs = "==22.1.0"
 pyyaml = "*"
 future = "*"
 singledispatch = {version = "*", markers = "python_version<'3.4'"}
