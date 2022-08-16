@@ -39,6 +39,10 @@ setup(
         'pytest-runner',
     ],
 
+    extras_require={
+        'toml': ['toml'],
+    },
+
     tests_require=tests_require,
 
     license="MIT license",
