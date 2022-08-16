@@ -1,8 +1,21 @@
 import inspect
 
 from attr import attrs
+from collections import namedtuple
 
 from .functions import to_model, to_dict, is_model
+
+
+def _property_attrs(cls):
+    PropertyAttr = namedtuple('PropertyAttr',
+                              ['metadata', 'name'])
+
+    for prop in dir(cls):
+        if (prop.startswith('__') or
+                not isinstance(getattr(cls, prop, None), property)):
+            continue
+
+        yield PropertyAttr(metadata={}, name=prop)
 
 
 def mutable(maybe_cls=None, strict=False):
@@ -10,6 +23,7 @@ def mutable(maybe_cls=None, strict=False):
     def wrap(cls):
         wrapped = attrs(cls)
         wrapped.__related_strict__ = strict
+        wrapped.__property_attrs__ = list(_property_attrs(cls))
         return wrapped
 
     return wrap(maybe_cls) if maybe_cls is not None else wrap
@@ -20,6 +34,7 @@ def immutable(maybe_cls=None, strict=False):
     def wrap(cls):
         wrapped = attrs(cls, frozen=True, slots=True)
         wrapped.__related_strict__ = strict
+        wrapped.__property_attrs__ = list(_property_attrs(cls))
         return wrapped
 
     return wrap(maybe_cls) if maybe_cls is not None else wrap
